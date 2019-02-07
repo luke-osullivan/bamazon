@@ -29,9 +29,9 @@ function forSale() {
 }
 
 // prompt user with two messages
-// pick product by "item_id"
-// pick how many
-// check if amt requested is gt/lt
+  // pick product by "item_id"
+  // pick how many
+    // check if amt requested is gt/lt
 function start() {
   inquirer.prompt([
     {
@@ -46,10 +46,14 @@ function start() {
     connection.query("SELECT * FROM products WHERE item_id = ?", userChoice.item_id, function (err, res) {
       if (err) throw err;
 
-      if (isNaN(userChoice.item_id, userChoice.purchased)) {
+      if (isNaN(userChoice.item_id)) {
         console.log("Please enter a number");
         start();
-      } else if (res[0].stock < userChoice.purchased) {
+      } else if (isNaN(userChoice.purchased)){
+        console.log("Please enter a number");
+        start();
+      }
+      else if (res[0].stock < userChoice.purchased) {
       console.log("We do not have that many in stock");
         start();
       } else {
@@ -64,7 +68,7 @@ function start() {
             item_id: userChoice.item_id
           }
         ])
-        start();
+        forSale();
       }
     });
   });
